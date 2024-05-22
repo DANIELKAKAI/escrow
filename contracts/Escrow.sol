@@ -2,6 +2,10 @@
 pragma solidity ^0.8.0;
 
 contract Escrow {
+    string public name = "360Deals";
+
+    address public owner;
+
     enum Status {
         AWAITING_PAYMENT,
         AWAITING_DELIVERY,
@@ -55,6 +59,10 @@ contract Escrow {
         address buyerAddress,
         string productId
     );
+
+    constructor() {
+        owner = msg.sender;
+    }
 
     function addProduct(
         address sellerAddress,
