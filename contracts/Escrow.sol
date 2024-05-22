@@ -18,10 +18,43 @@ contract Escrow {
         address arbitorAddress;
     }
 
-    mapping(address => mapping(string => Product)) public sellerProducts;
+    mapping(address => mapping(string => Product)) public escrowProducts;
 
-    event ProductAdded(address sellerAddress,address arbitorAddress,address buyerAddress,string memory productId,uint256 amount);
-    event PaymentDeposited(address depositor, uint256 amount);
+    event ProductAdded(
+        address sellerAddress,
+        address arbitorAddress,
+        address buyerAddress,
+        string productId,
+        uint256 amount
+    );
+    event PaymentDeposited(
+        address sellerAddress,
+        address arbitorAddress,
+        address buyerAddress,
+        string productId,
+        uint256 amount
+    );
+
+    event ApprovedByBuyer(
+        address sellerAddress,
+        address arbitorAddress,
+        address buyerAddress,
+        string productId
+    );
+
+    event RejectedByBuyer(
+        address sellerAddress,
+        address arbitorAddress,
+        address buyerAddress,
+        string productId
+    );
+
+    event ProductReturned(
+        address sellerAddress,
+        address arbitorAddress,
+        address buyerAddress,
+        string productId
+    );
 
     function addProduct(
         address sellerAddress,
@@ -31,7 +64,6 @@ contract Escrow {
     ) public {
         Product memory newProduct = Product({
             productId: productId,
-            buyer: newBuyer,
             amount: amount,
             status: Status.AWAITING_PAYMENT,
             buyerAddress: msg.sender,
@@ -40,62 +72,112 @@ contract Escrow {
 
         escrowProducts[sellerAddress][productId] = newProduct;
 
-        emit ProductAdded(sellerAddress,arbitorAddress,msg.sender,productId,amount);
+        emit ProductAdded(
+            sellerAddress,
+            arbitorAddress,
+            msg.sender,
+            productId,
+            amount
+        );
     }
 
     function deposit(
-        uint256 amount,
-        address sellerAdress,
-        string productId
-    ) external  {
-        require(escrowProducts[sellerAddress][productId]["status"] == State.AWAITING_PAYMENT);
+        address sellerAddress,
+        string memory productId,
+        uint256 amount
+    ) external {
         require(
-            escrowProducts[sellerAddress][productId]["amount"] >= msg.value,
-            "Deposit amount must be greater than or equal to product"
+            escrowProducts[sellerAddress][productId].status ==
+                Status.AWAITING_PAYMENT
         );
         require(
-            escrowProducts[sellerAddress][productId]["buyerAddress"] ==
-                msg.sender,
+            escrowProducts[sellerAddress][productId].amount == amount,
+            "Deposit amount must be equal to product amount"
+        );
+        require(
+            escrowProducts[sellerAddress][productId].buyerAddress == msg.sender,
             "Only the buyer can deposit funds"
         );
 
-        escrowProducts[sellerAddress][productId]["status"] = State
+        escrowProducts[sellerAddress][productId].status = Status
             .AWAITING_DELIVERY;
 
         //transfer funds to arbitor
 
-        emit PaymentDeposited(sellerAddress,[sellerAddress][productId]["arbitorAddress"],msg.sender,productId,amount);
+        emit PaymentDeposited(
+            sellerAddress,
+            escrowProducts[sellerAddress][productId].arbitorAddress,
+            msg.sender,
+            productId,
+            escrowProducts[sellerAddress][productId].amount
+        );
     }
 
-    function approveByBuyer(address sellerAddress,string memory productId)
-        external 
-    {
-        require(escrowProducts[sellerAddress][productId]["buyerAddress"] == msg.sender, "Only the buyer can call this function");
-        require(escrowProducts[sellerAddress][productId]["status"] == State.AWAITING_PAYMENT);
+    function approveByBuyer(
+        address sellerAddress,
+        string memory productId
+    ) external {
+        require(
+            escrowProducts[sellerAddress][productId].buyerAddress == msg.sender,
+            "Only the buyer can call this function"
+        );
+        require(
+            escrowProducts[sellerAddress][productId].status ==
+                Status.AWAITING_PAYMENT
+        );
 
         //transfer from arbitor to seller address
 
-        escrowProducts[sellerAddress][productId]["status"] = State.COMPLETE;
-        
+        escrowProducts[sellerAddress][productId].status = Status.COMPLETE;
+
+        emit ApprovedByBuyer(
+            sellerAddress,
+            escrowProducts[sellerAddress][productId].arbitorAddress,
+            msg.sender,
+            productId
+        );
     }
 
-    function rejectedByBuyer(address sellerAddress,string memory productId)
-        external 
-    {
-        require(escrowProducts[sellerAddress][productId]["buyerAddress"] == msg.sender, "Only the buyer can call this function");
-        require(escrowProducts[sellerAddress][productId]["status"] == State.AWAITING_DELIVERY);
+    function rejectedByBuyer(
+        address sellerAddress,
+        string memory productId
+    ) external {
+        require(
+            escrowProducts[sellerAddress][productId].buyerAddress == msg.sender,
+            "Only the buyer can call this function"
+        );
+        require(
+            escrowProducts[sellerAddress][productId].status ==
+                Status.AWAITING_DELIVERY
+        );
 
-        escrowProducts[sellerAddress][productId]["status"] = State.REJECTED;
+        escrowProducts[sellerAddress][productId].status = Status.REJECTED;
+
+        emit RejectedByBuyer(
+            sellerAddress,
+            escrowProducts[sellerAddress][productId].arbitorAddress,
+            msg.sender,
+            productId
+        );
     }
 
-    function productReturned(string memory productId)
-        external public
-    {
-        require(escrowProducts[msg.sender][productId] == State.REJECTED, "Product must be rejected");
+    function productReturned(string memory productId) external {
+        require(
+            escrowProducts[msg.sender][productId].status == Status.REJECTED,
+            "Product must be rejected"
+        );
 
         //transfer from arbitor to buyer
 
-        escrowProducts[sellerAddress][productId]["status"] = State.REFUNDED;
-        
+        escrowProducts[msg.sender][productId].status = Status.REFUNDED;
+
+        emit ProductReturned(
+            msg.sender,
+            escrowProducts[msg.sender][productId].arbitorAddress,
+            escrowProducts[msg.sender][productId].buyerAddress,
+            productId
+        );
+
+        delete escrowProducts[msg.sender][productId];
     }
 }
