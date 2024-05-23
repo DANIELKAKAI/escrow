@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/danielkakai/Desktop/projects/Web3/escrow/contracts/Escrow.sol": {
-      "lastModificationDate": 1716465694257,
+      "lastModificationDate": 1716467155188,
       "contentHash": "a8549bbbfd129430e9b859f824adadb3",
       "sourceName": "contracts/Escrow.sol",
       "solcConfig": {
@@ -35,6 +35,42 @@
       ],
       "artifacts": [
         "Escrow"
+      ]
+    },
+    "/Users/danielkakai/Desktop/projects/Web3/escrow/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1716461807411,
+      "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
       ]
     }
   }
