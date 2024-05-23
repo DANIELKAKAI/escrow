@@ -10,13 +10,15 @@ const {
 describe("Escrow contract", function () {
     async function deployTokenFixture() {
 
-        const [owner, addr1, addr2, addr3] = await ethers.getSigners();
+        const product = { productId: "22", amount: 10 }
+
+        const [owner, buyer, arbitor, seller] = await ethers.getSigners();
 
         const escrowContract = await ethers.deployContract("Escrow");
 
         await escrowContract.waitForDeployment();
 
-        return { escrowContract, owner, addr1, addr2, addr3 };
+        return { product, escrowContract, owner, buyer, arbitor, seller };
     }
 
     describe("Deployment", function () {
@@ -26,6 +28,24 @@ describe("Escrow contract", function () {
             expect(await escrowContract.owner()).to.equal(owner.address);
         });
 
+    });
+
+    describe("AddProduct", function () {
+        it("Buyer Can Add Product", async function () {
+            const { product, escrowContract, buyer, arbitor, seller } = await loadFixture(deployTokenFixture);
+
+            await expect(escrowContract.connect(buyer).addProduct(seller.address, arbitor.address, product.productId, product.amount))
+                .to.emit(escrowContract, "ProductAdded")
+                .withArgs(seller.address, arbitor.address, buyer.address, product.productId, product.amount);
+
+            let newProduct = await escrowContract.getProduct(seller.address, product.productId);
+
+            expect(newProduct.productId).to.equal(product.productId);
+            expect(newProduct.amount).to.equal(product.amount);
+            expect(newProduct.buyerAddress).to.equal(buyer.address);
+            expect(newProduct.arbitorAddress).to.equal(arbitor.address);
+            expect(newProduct.status).to.equal(0);
+        });
     });
 
 });

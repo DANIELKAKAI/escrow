@@ -89,6 +89,13 @@ contract Escrow {
         );
     }
 
+    function getProduct(
+        address sellerAddress,
+        string memory productId
+    ) public view returns (Product memory) {
+        return escrowProducts[sellerAddress][productId];
+    }
+
     function deposit(
         address sellerAddress,
         string memory productId,
