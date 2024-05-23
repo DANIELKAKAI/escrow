@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/danielkakai/Desktop/projects/Web3/escrow/contracts/Escrow.sol": {
-      "lastModificationDate": 1716467155188,
-      "contentHash": "a8549bbbfd129430e9b859f824adadb3",
+      "lastModificationDate": 1716470336463,
+      "contentHash": "6a5a8d7bee8ac33ca4778170287109d2",
       "sourceName": "contracts/Escrow.sol",
       "solcConfig": {
         "version": "0.8.24",

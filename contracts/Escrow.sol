@@ -69,7 +69,7 @@ contract Escrow {
         address arbitorAddress,
         string memory productId,
         uint256 amount
-    ) public {
+    ) external {
         Product memory newProduct = Product({
             productId: productId,
             amount: amount,
@@ -128,7 +128,7 @@ contract Escrow {
         );
     }
 
-    function approveByBuyer(
+    function approvedByBuyer(
         address sellerAddress,
         string memory productId
     ) external {
@@ -136,9 +136,11 @@ contract Escrow {
             escrowProducts[sellerAddress][productId].buyerAddress == msg.sender,
             "Only the buyer can call this function"
         );
+
         require(
             escrowProducts[sellerAddress][productId].status ==
-                Status.AWAITING_PAYMENT
+                Status.AWAITING_DELIVERY,
+            "Only product awaiting delivery can be approved"
         );
 
         //transfer from arbitor to seller address
@@ -163,7 +165,8 @@ contract Escrow {
         );
         require(
             escrowProducts[sellerAddress][productId].status ==
-                Status.AWAITING_DELIVERY
+                Status.AWAITING_DELIVERY,
+            "Only product awaiting delivery can be approved"
         );
 
         escrowProducts[sellerAddress][productId].status = Status.REJECTED;
@@ -192,7 +195,5 @@ contract Escrow {
             escrowProducts[msg.sender][productId].buyerAddress,
             productId
         );
-
-        delete escrowProducts[msg.sender][productId];
     }
 }
