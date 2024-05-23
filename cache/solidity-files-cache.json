@@ -110,6 +110,82 @@
       "artifacts": [
         "IERC20"
       ]
+    },
+    "/Users/danielkakai/Desktop/projects/Web3/escrow/contracts/EscrowV2.sol": {
+      "lastModificationDate": 1716477755949,
+      "contentHash": "9c0c14957fc81620d59616c8ddd4bc61",
+      "sourceName": "contracts/EscrowV2.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "EscrowV2"
+      ]
+    },
+    "/Users/danielkakai/Desktop/projects/Web3/escrow/contracts/EscrowV3.sol": {
+      "lastModificationDate": 1716479536741,
+      "contentHash": "d0cef287f4af3055decc796c27575d35",
+      "sourceName": "contracts/EscrowV3.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "EscrowV3"
+      ]
     }
   }
 }
