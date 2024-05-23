@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/danielkakai/Desktop/projects/Web3/escrow/contracts/Escrow.sol": {
-      "lastModificationDate": 1716470336463,
-      "contentHash": "6a5a8d7bee8ac33ca4778170287109d2",
+      "lastModificationDate": 1716476653712,
+      "contentHash": "d91603c03f4337557bf4a70f3bc7cccd",
       "sourceName": "contracts/Escrow.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -29,7 +29,9 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
       "versionPragmas": [
         "^0.8.0"
       ],
@@ -71,6 +73,42 @@
       ],
       "artifacts": [
         "console"
+      ]
+    },
+    "/Users/danielkakai/Desktop/projects/Web3/escrow/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1716471336879,
+      "contentHash": "5517c8678c18eb1a8ba58810e7ca39ca",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20"
       ]
     }
   }

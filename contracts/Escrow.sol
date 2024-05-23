@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract Escrow {
     string public name = "360Deals";
 
     address public owner;
+
+    address private cUsdAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 
     enum Status {
         AWAITING_PAYMENT,
@@ -118,6 +122,15 @@ contract Escrow {
             .AWAITING_DELIVERY;
 
         //transfer funds to arbitor
+        //transfer from arbitor to seller address
+        require(
+            IERC20(cUsdAddress).transferFrom(
+                msg.sender,
+                escrowProducts[sellerAddress][productId].arbitorAddress,
+                escrowProducts[sellerAddress][productId].amount
+            ),
+            "Transfer failed"
+        );
 
         emit PaymentDeposited(
             sellerAddress,
@@ -144,6 +157,14 @@ contract Escrow {
         );
 
         //transfer from arbitor to seller address
+        require(
+            IERC20(cUsdAddress).transferFrom(
+                escrowProducts[sellerAddress][productId].arbitorAddress,
+                sellerAddress,
+                escrowProducts[sellerAddress][productId].amount
+            ),
+            "Transfer failed"
+        );
 
         escrowProducts[sellerAddress][productId].status = Status.COMPLETE;
 
@@ -186,6 +207,14 @@ contract Escrow {
         );
 
         //transfer from arbitor to buyer
+        require(
+            IERC20(cUsdAddress).transferFrom(
+                escrowProducts[msg.sender][productId].arbitorAddress,
+                msg.sender,
+                escrowProducts[msg.sender][productId].amount
+            ),
+            "Transfer failed"
+        );
 
         escrowProducts[msg.sender][productId].status = Status.REFUNDED;
 
