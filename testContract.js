@@ -50,48 +50,52 @@ async function readFunction() {
 
 
 async function productDetails() {
-    let product = await contract.getProduct(sellerAddress, "ID-1");
+    let product = await contract.getProduct(sellerAddress, "ID-2");
     console.log(product);
 }
 
 
 async function addproduct() {
-    let tx = await contract.addProduct(sellerAddress, arbitorAdress, "ID-1", 100);
+    let tx = await contract.addProduct(sellerAddress, arbitorAdress, "ID-2", 1700776);
     let r = await tx.wait();
 }
 
 async function balance(address) {
-    const balance = await celoContract.balanceOf(arbitorAdress);
-    console.log(`Balance is ${balance}`);
+    const balance = await celoContract.balanceOf(address);
+    console.log(`Balance of ${address} is ${balance}`);
 }
 
-async function Tx() {
-
-    //const balance = await celoContract.balanceOf(ownerAddress);
-    //console.log(`Balance is ${balance}`);
-
-    //const approveTx = await celoContract.approve(escrowContractAddress, 100);
-    //let txres = await approveTx.wait();
-
-    //let tx = await contract.deposit(sellerAddress, "ID-1", 100);
-    //let res = await tx.wait();
-
-
-    const approveTx = await abContract.approve(escrowContractAddress, 100);
+async function approveBuyerTx() {
+    const approveTx = await abContract.approve(escrowContractAddress, 1700776);
     await approveTx.wait();
 
-    let tx = await contract.approvedByBuyer(sellerAddress, "ID-1");
+    let tx = await contract.approvedByBuyer(sellerAddress, "ID-2");
     await tx.wait();
 
 }
 
+async function depositTx() {
+
+    const approveTx = await celoContract.approve(escrowContractAddress, 1700776);
+    let txres = await approveTx.wait();
+
+    let tx = await contract.deposit(sellerAddress, "ID-2", 1700776);
+    let res = await tx.wait();
+
+}
+
+
 
 //addproduct();
 
-//productDetails();
+productDetails();
 
-//balance();
+//balance(ownerAddress);
+//balance(arbitorAdress);
+//balance(sellerAddress);
 
-Tx();
+//depositTx();
+
+//approveBuyerTx();
 
 
