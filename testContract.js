@@ -6,6 +6,8 @@ const ERC20ABIJson = require("./utils/erc20.abi.json");
 
 require('dotenv').config();
 
+const { cUsdToWei, weiToCusd } = require("./utils/utils")
+
 const OWNER_API_KEY = process.env.OWNER_PRIVATE_KEY;
 
 const ARBITOR_PRIVATE_KEY = process.env.ARBITOR_PRIVATE_KEY;
@@ -50,27 +52,27 @@ async function readFunction() {
 
 
 async function productDetails() {
-    let product = await contract.getProduct(sellerAddress, "ID-2");
+    let product = await contract.getProduct(sellerAddress, "ID-3");
     console.log(product);
 }
 
 
 async function addproduct() {
-    let tx = await contract.addProduct(sellerAddress, arbitorAdress, "ID-2", price);
+    let tx = await contract.addProduct(sellerAddress, arbitorAdress, "ID-3", cUsdToWei(1));
     let r = await tx.wait();
 }
 
 async function balance(address, name) {
     const balance = await celoContract.balanceOf(address);
-    console.log(`Balance of ${name} is ${balance}`);
+    console.log(`Balance of ${name} is ${weiToCusd(balance)}`);
 }
 
 async function approveBuyerTx() {
-    const approveTx = await abContract.approve(escrowContractAddress, price);
+    const approveTx = await abContract.approve(escrowContractAddress, cUsdToWei(1));
     await approveTx.wait();
 
     try {
-        let tx = await contract.approvedByBuyer(sellerAddress, "ID-2");
+        let tx = await contract.approvedByBuyer(sellerAddress, "ID-3");
         let res = await tx.wait();
         console.log(res.hash);
     }
@@ -82,12 +84,12 @@ async function approveBuyerTx() {
 
 async function depositTx() {
 
-    const approveTx = await celoContract.approve(escrowContractAddress, 1);
+    const approveTx = await celoContract.approve(escrowContractAddress, cUsdToWei(1));
     let txres = await approveTx.wait();
 
 
     try {
-        let tx = await contract.deposit(sellerAddress, "ID-1", 1);
+        let tx = await contract.deposit(sellerAddress, "ID-3", cUsdToWei(1));
         let res = await tx.wait();
 
         console.log(res);
@@ -97,10 +99,6 @@ async function depositTx() {
     }
 
 }
-
-var price = 0.00026862885;
-
-
 
 //addproduct();
 
@@ -114,11 +112,9 @@ var price = 0.00026862885;
 
 //approveBuyerTx();
 
-const decimals = 18; // Assuming cUSD has 18 decimals, adjust if different
+let w = weiToCusd(7000000000 * 67627);
 
-// Convert amount to token's smallest unit
-const amountInSmallestUnit = ethers.parseUnits(amount.toString(), decimals);
+console.log(w);
 
-console.log(amountInSmallestUnit);
 
 
