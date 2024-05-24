@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
 
-const TokenABIJson = require("./artifacts/contracts/EscrowV3.sol/EscrowV3.json");
+const TokenABIJson = require("./artifacts/contracts/EscrowV4.sol/EscrowV4.json");
 
 const ERC20ABIJson = require("./utils/erc20.abi.json");
 
@@ -23,7 +23,7 @@ const wallet = new ethers.Wallet(OWNER_API_KEY, provider);
 
 
 //cusd
-const cUsdAddress = "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9";
+const cUsdAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 const celoContract = new ethers.Contract(cUsdAddress, ERC20ABIJson, wallet);
 
 
@@ -34,7 +34,7 @@ const abContract = new ethers.Contract(cUsdAddress, ERC20ABIJson, abWallet);
 
 // ABI and Address of the deployed contract
 const contractABI = TokenABIJson.abi;
-const escrowContractAddress = "0x6244fa4Be9E12dA7b8A3a9C5b56c253be99395Ff";
+const escrowContractAddress = "0x30137D3B965E3E3E1EA28dE9C85E77383CAEf4D1";
 
 // Connect to the contract
 const contract = new ethers.Contract(escrowContractAddress, contractABI, wallet);
@@ -56,46 +56,69 @@ async function productDetails() {
 
 
 async function addproduct() {
-    let tx = await contract.addProduct(sellerAddress, arbitorAdress, "ID-2", 1700776);
+    let tx = await contract.addProduct(sellerAddress, arbitorAdress, "ID-2", price);
     let r = await tx.wait();
 }
 
-async function balance(address) {
+async function balance(address, name) {
     const balance = await celoContract.balanceOf(address);
-    console.log(`Balance of ${address} is ${balance}`);
+    console.log(`Balance of ${name} is ${balance}`);
 }
 
 async function approveBuyerTx() {
-    const approveTx = await abContract.approve(escrowContractAddress, 1700776);
+    const approveTx = await abContract.approve(escrowContractAddress, price);
     await approveTx.wait();
 
-    let tx = await contract.approvedByBuyer(sellerAddress, "ID-2");
-    await tx.wait();
+    try {
+        let tx = await contract.approvedByBuyer(sellerAddress, "ID-2");
+        let res = await tx.wait();
+        console.log(res.hash);
+    }
+    catch (error) {
+        console.log(error.shortMessage);
+    }
 
 }
 
 async function depositTx() {
 
-    const approveTx = await celoContract.approve(escrowContractAddress, 1700776);
+    const approveTx = await celoContract.approve(escrowContractAddress, 1);
     let txres = await approveTx.wait();
 
-    let tx = await contract.deposit(sellerAddress, "ID-2", 1700776);
-    let res = await tx.wait();
+
+    try {
+        let tx = await contract.deposit(sellerAddress, "ID-1", 1);
+        let res = await tx.wait();
+
+        console.log(res);
+    }
+    catch (error) {
+        console.log(error.shortMessage);
+    }
 
 }
+
+var price = 0.00026862885;
 
 
 
 //addproduct();
 
-productDetails();
+//productDetails();
 
-//balance(ownerAddress);
-//balance(arbitorAdress);
-//balance(sellerAddress);
+//balance(ownerAddress, "buyer");
+//balance(arbitorAdress, "arbitor");
+//balance(sellerAddress, "seller");
 
 //depositTx();
 
 //approveBuyerTx();
+
+const decimals = 18; // Assuming cUSD has 18 decimals, adjust if different
+
+// Convert amount to token's smallest unit
+const amountInSmallestUnit = ethers.parseUnits(amount.toString(), decimals);
+
+console.log(amountInSmallestUnit);
 
 

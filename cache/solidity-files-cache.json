@@ -186,6 +186,44 @@
       "artifacts": [
         "EscrowV3"
       ]
+    },
+    "/Users/danielkakai/Desktop/projects/Web3/escrow/contracts/EscrowV4.sol": {
+      "lastModificationDate": 1716553712183,
+      "contentHash": "311ba55a776e9f4c2e3b0b0fe888fa6f",
+      "sourceName": "contracts/EscrowV4.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "EscrowV4"
+      ]
     }
   }
 }

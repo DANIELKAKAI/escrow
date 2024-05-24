@@ -1,5 +1,6 @@
 {
   "EscrowModule#Escrow": "0xa3CB462dFE182a88d7bc58dF5A5B28051B5aaB20",
   "EscrowModule#EscrowV2": "0xA3F1d7e646667D44DFb9F3750b56F7B6d0fff2FF",
-  "EscrowModule#EscrowV3": "0x6244fa4Be9E12dA7b8A3a9C5b56c253be99395Ff"
+  "EscrowModule#EscrowV3": "0x6244fa4Be9E12dA7b8A3a9C5b56c253be99395Ff",
+  "EscrowModule#EscrowV4": "0x30137D3B965E3E3E1EA28dE9C85E77383CAEf4D1"
 }
