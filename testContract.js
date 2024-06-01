@@ -51,8 +51,8 @@ async function readFunction() {
 }
 
 
-async function productDetails() {
-    let product = await contract.getProduct(sellerAddress, "ID-3");
+async function productDetails(id) {
+    let product = await contract.getProduct(sellerAddress, id);
     console.log(product);
 }
 
@@ -102,7 +102,7 @@ async function depositTx() {
 
 //addproduct();
 
-//productDetails();
+productDetails("111");
 
 //balance(ownerAddress, "buyer");
 //balance(arbitorAdress, "arbitor");
@@ -112,9 +112,7 @@ async function depositTx() {
 
 //approveBuyerTx();
 
-let w = weiToCusd(7000000000 * 67627);
 
-console.log(w);
 
 
 
