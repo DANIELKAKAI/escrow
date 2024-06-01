@@ -1,2 +1,41 @@
 node_modules
 .env
+
+
+#front-end
+escrow-frontend/.env
+escrow-frontend/node_modules
+
+# dependencies
+escrow-frontend/node_modules
+escrow-frontend/.pnp
+escrow-frontend/.pnp.js
+
+# testing
+escrow-frontend/coverage
+
+# next.js
+escrow-frontend/.next/
+escrow-frontend/out/
+
+# production
+escrow-frontend/build
+
+# misc
+escrow-frontend/.DS_Store
+escrow-frontend/*.pem
+
+# debug
+escrow-frontend/npm-debug.log*
+escrow-frontend/yarn-debug.log*
+escrow-frontend/yarn-error.log*
+
+# local env files
+escrow-frontend/.env*.local
+
+# vercel
+escrow-frontend/.vercel
+
+# typescript
+escrow-frontend/*.tsbuildinfo
+escrow-frontend/next-env.d.ts
