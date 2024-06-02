@@ -16,7 +16,7 @@ An escrow deal is a financial arrangement where a third party, called the escrow
 
 1. Sellers sign up with phone numbers and enlist their products
 
-2. Auto create seller wallet addresses using their phone numbers (optional)
+2. Auto create seller wallet addresses using their phone numbers using Celo Social Connect (optional)
 
 3. Buyer starts escrow deal for a product
 
