@@ -1,9 +1,11 @@
 # HALISI Celo Escrow
 
 Mainnet smart contract link:
+
 https://celoscan.io/address/0xa3CB462dFE182a88d7bc58dF5A5B28051B5aaB20
 
 Alfajores smart contract link:
+
 https://alfajores.celoscan.io/address/0x30137D3B965E3E3E1EA28dE9C85E77383CAEf4D1
 
 ## What is Escrow

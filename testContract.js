@@ -113,7 +113,7 @@ async function depositTx() {
 
 //addproduct();
 
-productDetails("008");
+productDetails("009");
 
 //balance(ownerAddress, "buyer");
 //balance(arbitorAdress, "arbitor");

@@ -2,6 +2,8 @@ const { ethers } = require("ethers");
 
 require('dotenv').config();
 
+//const ARBITOR_PRIVATE_KEY = process.env.ARBITOR_PRIVATE_KEY;
+
 const decimals = 18;
 
 function cUsdToWei(amount) {
@@ -15,6 +17,7 @@ function weiToCusd(amountInWei) {
 }
 
 async function arbitorApproval(amount) {
+    require('dotenv').config();
     const ERC20ABIJson = require("./erc20.abi.json");
     const cUsdAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
