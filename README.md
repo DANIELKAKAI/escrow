@@ -8,6 +8,10 @@ Alfajores smart contract link:
 
 https://alfajores.celoscan.io/address/0x30137D3B965E3E3E1EA28dE9C85E77383CAEf4D1
 
+Escrow-frontend Github Link:
+
+https://github.com/DANIELKAKAI/escrow-frontend
+
 ## What is Escrow
 
 An escrow deal is a financial arrangement where a third party, called the escrow agent/arbitor, holds and regulates the payment of funds required for two parties involved in a given transaction. This helps ensure security by keeping the payment safe until all the terms of the agreement are met
